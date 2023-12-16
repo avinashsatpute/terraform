@@ -2,12 +2,16 @@ provider "aws" {
   region = "ap-south-1"
 }
 resource "aws_instance" "demo-server" {
-  ami = "ami-02a2af70a66af6dfb"
+  ami = "ami-0287a05f0ef0e9d9a"
   instance_type = "t2.micro"
   key_name = "Kube"
   #security_groups = ["demo-sg"]
   vpc_security_group_ids = [aws_security_group.demo-sg.id]
   subnet_id = aws_subnet.dpp-public-subnet-01.id
+for_each =  toset(["Jenkins-Master", "buidl-slave", "ansible"])
+  tags = {
+    Name = "${each.key}"
+  } 
 }
 resource "aws_security_group" "demo-sg" {
   name        = "demo-sg"
