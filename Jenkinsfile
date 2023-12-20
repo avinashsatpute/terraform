@@ -1,17 +1,12 @@
 pipeline {
-    agent {
-        node {
-            label 'maven'
-        }
+  agent {
+    node { label 'maven' }
+  }
+  stages {
+    stage('Test') {
+      steps {
+        sh 'java --version'
+      }
     }
-environment {
-    PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
-}
-    stages {
-        stage("build"){
-            steps {
-                sh 'mvn clean deploy'
-            }
-        }
-}
+  }
 }
